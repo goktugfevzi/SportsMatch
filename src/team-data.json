@@ -1,0 +1,56 @@
+[
+  {
+    "id": "1",
+    "title": "ESKİŞEHİRSPOR",
+    "captain": "Murat Diri",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/tr/2/25/Eski%C5%9Fehirspor.png"
+  },
+  {
+    "id": "2",
+    "title": "Beşiktaş",
+    "captain": "Sinan Engin",
+    "imageUrl": "https://cdn.dsmcdn.com/ty58/product/media/images/20210118/11/54389753/131031312/1/1_org_zoom.jpg"
+  },
+  {
+    "id": "3",
+    "title": "Fenerbahçe",
+    "captain": "Kadıköy Boğası",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/tr/8/86/Fenerbah%C3%A7e_SK.png"
+  },
+  {
+    "id": "4",
+    "title": "Galatasaray",
+    "captain": "Arda Turan",
+    "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnxeDb0QORflc3unJHI20YliSmlFnN6_WGDLAQfvoyLKIh6Thk_lLmf0Cw1wqKx3zlIOE&usqp=CAU"
+  },
+  {
+    "id": "5",
+    "title": "Akhisar",
+    "captain": "Amigo Nuri",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/tr/0/04/Akhisarspor.png"
+  },
+  {
+    "id": "6",
+    "title": "İstanbulSpor",
+    "captain": "Cem Uzan",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/tr/e/ed/IstanbulsporAS.png"
+  },
+  {
+    "id": "7",
+    "title": "Real Mardin",
+    "captain": "C. Ronaldo",
+    "imageUrl": "https://www.realmadrid.com/StaticFiles/RealMadridResponsive/images/static/og-image.png"
+  },
+  {
+    "id": "8",
+    "title": "Türkiye",
+    "captain": "Şenol Güneş",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/Roundel_flag_of_Turkey.svg/200px-Roundel_flag_of_Turkey.svg.png"
+  },
+  {
+    "id": "9",
+    "title": "Barcelona",
+    "captain": "Messi",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/tr/thumb/9/96/FCB.svg/1200px-FCB.svg.png"
+  }
+]
