@@ -8,8 +8,8 @@ import SearchInput from "../../Components/SearchInput";
 function SearchTeam(){
 
     const[team,SetTeam] = useState(teamData)
-
-    const returnItem = ({item}) => <Teams team={item} MatchButton={"Takım Detayları"} />
+const text = "Takım Detayları";
+    const returnItem = ({item}) => {item.MatchButton=text; return(<Teams team={item}/>)}
 
     const changeText = (text) => {
         const filteredTeam = teamData.filter(team => {

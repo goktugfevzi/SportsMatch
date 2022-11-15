@@ -5,8 +5,9 @@ import teamData from '../../team-data.json';
 import Teams from "../../Components/TeamCards";
 
 function HomeScreen(){
+    const text = "Maç Bul";
+    const returnItem = ({item}) => {item.MatchButton=text; return(<Teams team={item}/>)}
 
-    const returnItem = ({item}) => <Teams team={item} MatchButton={"Maç İsteği"}/>
     return(
         <SafeAreaView>
             <View style={styles.container}>
