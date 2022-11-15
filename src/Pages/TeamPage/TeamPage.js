@@ -1,6 +1,6 @@
 import React from "react";
 import { Text, View, Image } from "react-native";
-import styles from "./TeamPage.style";
+import styles from "./teamPage.style";
 import FloatingButton from "../../Components/FloatingButton";
 import {TeamStack} from "../../Router";
 
