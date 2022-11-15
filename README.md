@@ -25,23 +25,8 @@ yarn add react-native-reanimated react-native-gesture-handler react-native-scree
 
 <br/>
 
+
 ## STEP 3
- Paste this to android/app/src/main/java/<your package name>/MainActivity.java
- 
-```sh
-@Override
-protected void onCreate(Bundle savedInstanceState) {
-  super.onCreate(null);
-}
-```
-
-```sh
-import android.os.Bundle;
-```
-
-<br/>
-
-## STEP 4
 
 Run Command
  
@@ -51,11 +36,73 @@ yarn add @react-navigation/material-bottom-tabs react-native-paper react-native-
 
 <br/>
 
-## STEP 5
-Paste this to android/app/build.gradle
+
+## STEP 4
+
+Run Command
  
 ```sh
-apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
+yarn add formik
+```
+
+<br/>
+
+## STEP 5
+
+Run Command
+ 
+```sh
+ yarn add react-native-flash-message  
+```
+
+<br/>
+
+## STEP 6
+
+Run Command
+ 
+```sh
+yarn add @react-native-firebase/app
+```
+
+<br/>
+
+## STEP 7
+
+Run Command
+ 
+```sh
+yarn add @react-native-firebase/auth 
+```
+
+<br/>
+
+## STEP 8
+
+Run Command
+ 
+```sh
+yarn add react-native-pager-view
+```
+
+<br/>
+
+## STEP 9
+
+Run Command
+ 
+```sh
+yarn add react-native-pager-view
+```
+
+<br/>
+
+## STEP 10
+
+Run Command
+ 
+```sh
+yarn add @react-navigation/material-top-tabs react-native-tab-view
 ```
 
 <br/>
