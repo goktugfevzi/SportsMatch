@@ -13,7 +13,7 @@ const Button = ({text, onPress, loading, icon ,theme="primary"}) => {
         <ActivityIndicator color="white" />
       ) : (
         <View style={styles[theme].button_container}>
-          <Icon name={icon} color="white" size={18} /> 
+          <Icon name={icon} color="tomato" size={25} /> 
           <Text style={styles[theme].title}>{text}</Text>
         </View>
       )}

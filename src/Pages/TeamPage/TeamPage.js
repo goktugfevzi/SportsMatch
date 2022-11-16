@@ -2,12 +2,11 @@ import React from "react";
 import { Text, View, Image } from "react-native";
 import styles from "./TeamPage.style";
 import FloatingButton from "../../Components/FloatingButton";
-import {TeamStack} from "../../Router";
 
 function TeamPage({ navigation }) {
 
     const FloatingButtonPress = () => {
-        navigation.navigate('TeamStack', { screen: 'Invate' });
+        navigation.navigate('TeamTabTop');
     }
     return (
         <View style={styles.container}>

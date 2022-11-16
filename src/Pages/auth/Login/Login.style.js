@@ -12,6 +12,8 @@ export default StyleSheet.create({
     header:{
         color:colors.darkgreen,
         margin:5,
-        fontSize:140,
+        fontSize:104,
+        height: Dimensions.get('window').height/3
+        }
     }
-})
+)

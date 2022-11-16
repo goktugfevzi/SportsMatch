@@ -12,9 +12,9 @@ export default StyleSheet.create({
     header:{
         color:"#fff",
         margin:5,
-        fontSize:140,
+        fontSize:104,
         backgroundColor:colors.darkgreen,
         borderRadius:25,
-
+       height: Dimensions.get('window').height/3
     }
 })

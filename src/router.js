@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import Home from './Pages/Homepage/HomeScreen';
 import Profile from './Pages/ProfilePage/Profile';
@@ -18,7 +19,7 @@ import FlashMessage from 'react-native-flash-message';
 
 const Stack = createNativeStackNavigator();
 const Tab = createMaterialBottomTabNavigator();
-const TabTop = createMaterialTopTabNavigator
+const TabTop = createMaterialTopTabNavigator();
 
 export default function App() {
   const [userSession, setUserSession] = useState();
@@ -29,16 +30,26 @@ export default function App() {
     });
   }, []);
 
+  const TeamStack = () => {
+    return (<Stack.Navigator initialRouteName='Team'>
+      <Stack.Screen name="Team" component={Team} />
+      <Stack.Screen name="TeamTabTop" component={TeamTabTop} />
+    </Stack.Navigator>
+    );
+  };
+
 
   //PlayerInvationPage TopTab
-  function  TeamStack(){
+  const TeamTabTop = () => {
     return (
-      <NavigationContainer>
-      <TabTop.Navigator>
+      <TabTop.Navigator initialRouteName='Invate' screenOptions={{
+        tabBarActiveTintColor: '#e91e63',
+        tabBarLabelStyle: { fontSize: 12 },
+        tabBarStyle: { backgroundColor: 'tomato' },
+      }}>
         <TabTop.Screen name="Invate" component={Invate} />
         <TabTop.Screen name="Request" component={Request} />
       </TabTop.Navigator>
-      </NavigationContainer>
     );
   }
 
@@ -71,8 +82,8 @@ export default function App() {
           }}
         />
         <Tab.Screen
-          name="Team"
-          component={Team}
+          name="TeamStack"
+          component={TeamStack}
           options={{
             tabBarLabel: 'Team',
             tabBarIcon: ({ color }) => (
@@ -114,19 +125,21 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator>
         {!userSession ? (
-         <Stack.Screen
-         name="StackNav"
-         component={StackNav}
-         options={{ headerShown: false }}
-       />) : (
-            <Stack.Screen
-           name="TabNav"
-           component={TabNav}
-           options={{ headerTintColor: 'orange', headerRight: () => (<MaterialCommunityIcons name="logout"
-            size={30}
-            color="orange"
-            onPress={()=> auth().signOut()}/>)}}
-         />
+          <Stack.Screen
+            name="StackNav"
+            component={StackNav}
+            options={{ headerShown: false }}
+          />) : (
+          <Stack.Screen
+            name="TabNav"
+            component={TabNav}
+            options={{
+              headerTintColor: 'orange', headerRight: () => (<MaterialCommunityIcons name="logout"
+                size={30}
+                color="orange"
+                onPress={() => auth().signOut()} />)
+            }}
+          />
         )}
       </Stack.Navigator>
       <FlashMessage position="top" />

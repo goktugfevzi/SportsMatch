@@ -7,6 +7,11 @@ import {Formik} from 'formik';
 import auth from '@react-native-firebase/auth';
 import {showMessage} from 'react-native-flash-message';
 import authErrorMessageParser from '../../../utils/authErrorMessageParser';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
+
+GoogleSignin.configure({
+  webClientId: '739050688413-h8kft1fn1s3rqe5se3307dr71ke916nq.apps.googleusercontent.com',
+});
 
 const initialFormValues = {
   usermail: '',
@@ -17,6 +22,20 @@ const initialFormValues = {
 const Sign = ({navigation}) => {
   const [loading, setLoading] = useState(false);
 
+  
+  async function onGoogleButtonPress() {
+    // Check if your device supports Google Play
+    await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
+    // Get the users ID token
+    const { idToken } = await GoogleSignin.signIn();
+  
+    // Create a Google credential with the token
+    const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+  
+    // Sign-in the user with the credential
+    return auth().signInWithCredential(googleCredential);
+  }
+
   const handleLogin = () => {
     navigation.goBack();
   };
@@ -25,6 +44,20 @@ const Sign = ({navigation}) => {
     if (formValues.password !== formValues.repassword) {
       showMessage({
         message: 'Şifreler uyuşmuyor...',
+        type: 'danger',
+      });
+      return;
+    }
+    if (formValues.usermail === "") {
+      showMessage({
+        message: 'Mail giriniz...',
+        type: 'danger',
+      });
+      return;
+    }
+    if (formValues.password === "") {
+      showMessage({
+        message: 'Şifre giriniz...',
         type: 'danger',
       });
       return;
@@ -81,7 +114,12 @@ const Sign = ({navigation}) => {
           </>
         )}
       </Formik>
-
+      <Button
+      theme="secondary"
+      icon={"google"}
+      loading={loading}
+      onPress={() => onGoogleButtonPress().then(() => console.log('Signed in with Google!'))}
+    />
       <Button
         text="Geri"
         theme="secondary"
