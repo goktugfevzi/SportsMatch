@@ -92,7 +92,7 @@ yarn add react-native-pager-view
 Run Command
  
 ```sh
-yarn add react-native-pager-view
+yarn add @react-native-google-signin/google-signin
 ```
 
 <br/>
