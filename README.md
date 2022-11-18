@@ -17,7 +17,7 @@ yarn add @react-navigation/native @react-navigation/native-stack
 
 ## STEP 2
 
-Run Command
+Run Commandg
 
 ```sh
 yarn add react-native-reanimated react-native-gesture-handler react-native-screens react-native-safe-area-context @react-native-community/masked-view
