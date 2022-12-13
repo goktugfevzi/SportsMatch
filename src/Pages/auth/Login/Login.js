@@ -1,8 +1,8 @@
-import {View, Text} from 'react-native';
+import {View, Text,SafeAreaView,Image} from 'react-native';
 import React,{useState} from 'react';
 import styles from './Login.style';
-import Input from '../../../Components/Input';
-import Button from '../../../Components/Button';
+import Input from '../../../Components/LoginInput';
+import Button from '../../../Components/LogInButton';
 import authErrorMessageParser from '../../../utils/authErrorMessageParser';
 import {showMessage} from "react-native-flash-message"
 import {Formik} from 'formik';
@@ -52,14 +52,16 @@ const Login = ({navigation}) => {
     }
     console.log(formValues);
   };
-
   return (
-    <View style={styles.container}>
-      <Text style={styles.header}>SPORTSMATCH</Text>
-
-      <Formik initialValues={initialFormValues} onSubmit={handleFormSubmit}>
+    <SafeAreaView style={styles.container}>
+      <View style={styles.logo_container}>
+            <Image style={styles.logo} source={require("../../../Components/Images/logo2.png")}/>
+            <Text style={styles.name_style}>SPORTSMATCH</Text>
+      </View>
+      <Formik initialValues={initialFormValues}
+       onSubmit={handleFormSubmit}>
         {({values, handleChange, handleSubmit}) => (
-          <>
+          <View style={styles.body_container}>
             <Input
               value={values.usermail}
               onChangeText={handleChange('usermail')}
@@ -74,13 +76,13 @@ const Login = ({navigation}) => {
               isSecure
             />
 
-            <Button text="Giriş Yap" theme="primary" onPress={handleSubmit} loading={loading} />
-          </>
+            <Button title={"Giriş Yap"} theme="primary"  function={handleSubmit} loading={loading} />
+
+            <Button title={"Kayıt Ol"} theme="secondary"  function={handleSignUp} />
+        </View>
         )}
       </Formik>
-
-      <Button text="Kayıt Ol" theme="secondary" onPress={handleSignUp} />
-    </View>
+    </SafeAreaView>
   );
 };
 

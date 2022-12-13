@@ -3,11 +3,11 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-
+import Ionicons2 from 'react-native-vector-icons/AntDesign';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-
+import Font from 'react-native-vector-icons/Feather';
 import Home from './Pages/Homepage/HomeScreen';
-import Profile from './Pages/ProfilePage/Profile';
+import Profile from "./Pages/ProfilePage/Profile";
 import SearchTeam from './Pages/SearchTeamPage/SearchTeam';
 import Team from './Pages/TeamPage/TeamPage';
 import Login from './Pages/auth/Login';
@@ -16,13 +16,39 @@ import Request from './Pages/PlayerInvatePage/RequestPage'
 import Sign from './Pages/auth/Sign';
 import auth from '@react-native-firebase/auth';
 import FlashMessage from 'react-native-flash-message';
+import EditProfile from './Pages/EditProfile';
 
 const Stack = createNativeStackNavigator();
 const Tab = createMaterialBottomTabNavigator();
 const TabTop = createMaterialTopTabNavigator();
 
-export default function App() {
+export default function App({navigation}) {
+
   const [userSession, setUserSession] = useState();
+
+
+//Profile-EditProfile Stack
+const ProfileStack = ({ navigation }) => {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name="Profile" component={Profile}
+       options={{headerShown:true, 
+        headerRight: () => (<Font name="edit"
+              size={20}
+              color="orange"
+              onPress={() => navigation.navigate('Edit')} />)
+            }}/>
+      <Stack.Screen name="Edit" component={EditProfile} 
+      options={{headerShown:true, 
+        headerRight: () => (<Font name="edit"
+              size={20}
+              color="orange"
+              />)
+            }}
+      />
+    </Stack.Navigator>
+  );
+}
 
   useEffect(() => {
     auth().onAuthStateChanged(user => {
@@ -32,8 +58,8 @@ export default function App() {
 
   const TeamStack = () => {
     return (<Stack.Navigator initialRouteName='Team'>
-      <Stack.Screen name="Team" component={Team} />
-      <Stack.Screen name="TeamTabTop" component={TeamTabTop} />
+      <Stack.Screen name="Team" component={Team} options={{headerShown:false}} />
+      <Stack.Screen name="TeamTabTop" component={TeamTabTop} options={{headerShown:false}} />
     </Stack.Navigator>
     );
   };
@@ -45,7 +71,7 @@ export default function App() {
       <TabTop.Navigator initialRouteName='Invate' screenOptions={{
         tabBarActiveTintColor: '#e91e63',
         tabBarLabelStyle: { fontSize: 12 },
-        tabBarStyle: { backgroundColor: 'tomato' },
+        tabBarStyle: { backgroundColor:'orange' },
       }}>
         <TabTop.Screen name="Invate" component={Invate} />
         <TabTop.Screen name="Request" component={Request} />
@@ -58,8 +84,8 @@ export default function App() {
     return (
       <Tab.Navigator
         initialRouteName="Feed"
-        activeColor="#e91e63"
-        barStyle={{ backgroundColor: 'tomato' }}
+        activeColor="snow"
+        barStyle={{ backgroundColor: 'orange' }}
       >
         <Tab.Screen
           name="Home"
@@ -67,7 +93,7 @@ export default function App() {
           options={{
             tabBarLabel: 'Home',
             tabBarIcon: ({ color }) => (
-              <MaterialCommunityIcons name="home" color={color} size={26} />
+              <Font name="home" color={color} size={26} />
             ),
           }}
         />
@@ -77,7 +103,7 @@ export default function App() {
           options={{
             tabBarLabel: 'SearchTeam',
             tabBarIcon: ({ color }) => (
-              <MaterialCommunityIcons name="shield-search" color={color} size={26} />
+              <Font name='search' color={color} size={26} />
             ),
           }}
         />
@@ -87,17 +113,17 @@ export default function App() {
           options={{
             tabBarLabel: 'Team',
             tabBarIcon: ({ color }) => (
-              <MaterialCommunityIcons name="cupcake" color={color} size={26} />
+              <Font name="users" color={'color'} size={26} />
             ),
           }}
         />
         <Tab.Screen
           name="Profile"
-          component={Profile}
+          component={ProfileStack}
           options={{
             tabBarLabel: 'Profile',
             tabBarIcon: ({ color }) => (
-              <MaterialCommunityIcons name="account" color={color} size={26} />
+              <Font name="user" color={color} size={26} />
             ),
           }}
         />
@@ -107,14 +133,14 @@ export default function App() {
   //AUTH SCREENS
   const AuthStack = () => {
     return (
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Navigator screenOptions={{ headerShown: false}}>
         <Stack.Screen name="LoginPage" component={Login} />
         <Stack.Screen name="SignPage" component={Sign} />
       </Stack.Navigator>
     );
   };
   //STACK NAVİGATOR FOR AUTH
-  const StackNav = () => {
+  const StackNav = (navigation) => {
     return (<Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="AuthStack" component={AuthStack} />
     </Stack.Navigator>)
@@ -134,10 +160,15 @@ export default function App() {
             name="TabNav"
             component={TabNav}
             options={{
-              headerTintColor: 'orange', headerRight: () => (<MaterialCommunityIcons name="logout"
-                size={30}
-                color="orange"
-                onPress={() => auth().signOut()} />)
+              headerShown:true,
+              headerStyle:{backgroundColor:'orange'},
+              headerTitle:"SpotsMatch",
+              headerTitleAlign:'center',
+              headerTintColor: 'snow', headerRight: () => (<MaterialCommunityIcons name="logout"
+                size={26}
+                color="snow"
+                onPress={() => auth().signOut()} />),
+                           
             }}
           />
         )}
