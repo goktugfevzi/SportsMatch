@@ -3,11 +3,10 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import Ionicons2 from 'react-native-vector-icons/AntDesign';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Font from 'react-native-vector-icons/Feather';
 import Home from './Pages/Homepage/HomeScreen';
-import Profile from "./Pages/ProfilePage/Profile";
+import ProfilePage from "./Pages/ProfilePage/Profile";
 import SearchTeam from './Pages/SearchTeamPage/SearchTeam';
 import Team from './Pages/TeamPage/TeamPage';
 import Login from './Pages/auth/Login';
@@ -22,48 +21,47 @@ const Stack = createNativeStackNavigator();
 const Tab = createMaterialBottomTabNavigator();
 const TabTop = createMaterialTopTabNavigator();
 
-export default function App({navigation}) {
+export default function App() {
 
   const [userSession, setUserSession] = useState();
-
-
-//Profile-EditProfile Stack
-const ProfileStack = ({ navigation }) => {
-  return (
-    <Stack.Navigator>
-      <Stack.Screen name="Profile" component={Profile}
-       options={{headerShown:true, 
-        headerRight: () => (<Font name="edit"
-              size={20}
-              color="orange"
-              onPress={() => navigation.navigate('Edit')} />)
-            }}/>
-      <Stack.Screen name="Edit" component={EditProfile} 
-      options={{headerShown:true, 
-        headerRight: () => (<Font name="edit"
-              size={20}
-              color="orange"
-              />)
-            }}
-      />
-    </Stack.Navigator>
-  );
-}
-
   useEffect(() => {
     auth().onAuthStateChanged(user => {
       setUserSession(!!user);
-    });
+    })
   }, []);
+
+  //Profile-EditProfile Stack
+  const ProfileStack = ({ navigation }) => {
+    return (
+      <Stack.Navigator>
+        <Stack.Screen name="ProfilePage" component={ProfilePage}
+          options={{
+            headerShown: true,
+            headerRight: () => (<Font name="edit"
+              size={20}
+              color="orange"
+              onPress={() => navigation.navigate('Edit')} />)
+          }} />
+        <Stack.Screen name="Edit" component={EditProfile}
+          options={{
+            headerShown: true,
+            headerRight: () => (<Font name="edit"
+              size={20}
+              color="orange"
+            />)
+          }}
+        />
+      </Stack.Navigator>
+    );
+  }
 
   const TeamStack = () => {
     return (<Stack.Navigator initialRouteName='Team'>
-      <Stack.Screen name="Team" component={Team} options={{headerShown:false}} />
-      <Stack.Screen name="TeamTabTop" component={TeamTabTop} options={{headerShown:false}} />
+      <Stack.Screen name="Team" component={Team} options={{ headerShown: false }} />
+      <Stack.Screen name="TeamTabTop" component={TeamTabTop} options={{ headerShown: false }} />
     </Stack.Navigator>
     );
   };
-
 
   //PlayerInvationPage TopTab
   const TeamTabTop = () => {
@@ -71,7 +69,7 @@ const ProfileStack = ({ navigation }) => {
       <TabTop.Navigator initialRouteName='Invate' screenOptions={{
         tabBarActiveTintColor: '#e91e63',
         tabBarLabelStyle: { fontSize: 12 },
-        tabBarStyle: { backgroundColor:'orange' },
+        tabBarStyle: { backgroundColor: 'orange' },
       }}>
         <TabTop.Screen name="Invate" component={Invate} />
         <TabTop.Screen name="Request" component={Request} />
@@ -83,17 +81,16 @@ const ProfileStack = ({ navigation }) => {
   const TabNav = () => {
     return (
       <Tab.Navigator
-        initialRouteName="Feed"
-        activeColor="snow"
-        barStyle={{ backgroundColor: 'orange' }}
-      >
+        shifting={true}
+        activeColor="#e91e63"
+        barStyle={{ backgroundColor: 'orange' }}>
         <Tab.Screen
           name="Home"
           component={Home}
           options={{
             tabBarLabel: 'Home',
             tabBarIcon: ({ color }) => (
-              <Font name="home" color={color} size={26} />
+              <MaterialCommunityIcons name="home" color={color} size={26} />
             ),
           }}
         />
@@ -101,9 +98,9 @@ const ProfileStack = ({ navigation }) => {
           name="SearchTeam"
           component={SearchTeam}
           options={{
-            tabBarLabel: 'SearchTeam',
+            tabBarLabel: 'Search',
             tabBarIcon: ({ color }) => (
-              <Font name='search' color={color} size={26} />
+              <MaterialCommunityIcons name="text-search" color={color} size={26} />
             ),
           }}
         />
@@ -113,7 +110,7 @@ const ProfileStack = ({ navigation }) => {
           options={{
             tabBarLabel: 'Team',
             tabBarIcon: ({ color }) => (
-              <Font name="users" color={'color'} size={26} />
+              <MaterialCommunityIcons name="account-group" color={color} size={26} />
             ),
           }}
         />
@@ -123,7 +120,7 @@ const ProfileStack = ({ navigation }) => {
           options={{
             tabBarLabel: 'Profile',
             tabBarIcon: ({ color }) => (
-              <Font name="user" color={color} size={26} />
+              <MaterialCommunityIcons name="account" color={color} size={26} />
             ),
           }}
         />
@@ -133,20 +130,28 @@ const ProfileStack = ({ navigation }) => {
   //AUTH SCREENS
   const AuthStack = () => {
     return (
-      <Stack.Navigator screenOptions={{ headerShown: false}}>
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name="LoginPage" component={Login} />
         <Stack.Screen name="SignPage" component={Sign} />
       </Stack.Navigator>
     );
   };
+
+  ////İLK DEFA KAYIT OLAN KULLANICIYI EDİT SAYFASINA YÖNLENDİRME HENÜZ ÇALIŞMIYOR
+  const userTime = "a";
+  const StackEdit = () => {
+    if (!(auth().currentUservariable === null)) {
+      userTime ??= auth().currentUser.metadata;
+    }
+    return (<Stack.Navigator> {(userTime.creationTime) === (userTime.lastSignInTime) ? (<Stack.Screen name="Edit" component={EditProfile} />) : (null)}</Stack.Navigator>);
+  }
+
   //STACK NAVİGATOR FOR AUTH
-  const StackNav = (navigation) => {
+  const StackNav = () => {
     return (<Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="AuthStack" component={AuthStack} />
     </Stack.Navigator>)
   }
-
-
   return (
     <NavigationContainer>
       <Stack.Navigator>
@@ -160,15 +165,14 @@ const ProfileStack = ({ navigation }) => {
             name="TabNav"
             component={TabNav}
             options={{
-              headerShown:true,
-              headerStyle:{backgroundColor:'orange'},
-              headerTitle:"SpotsMatch",
-              headerTitleAlign:'center',
+              headerShown: true,
+              headerStyle: { backgroundColor: 'orange' },
+              headerTitle: "SpotsMatch",
+              headerTitleAlign: 'center',
               headerTintColor: 'snow', headerRight: () => (<MaterialCommunityIcons name="logout"
                 size={26}
                 color="snow"
                 onPress={() => auth().signOut()} />),
-                           
             }}
           />
         )}

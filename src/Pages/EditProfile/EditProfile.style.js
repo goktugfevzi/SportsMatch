@@ -5,12 +5,13 @@ const styles =StyleSheet.create({
        flex:1,
        margin:5,
        padding:10,
-       alignItems:'center',
        resizeMode:'contain',
        flexDirection:'column'
        
     },  
-
+    keyStyle:{
+      flex:1,
+   },
     containerTwo:{
         flexDirection:'row-reverse',
         backgroundColor:'orange',

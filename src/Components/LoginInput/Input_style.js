@@ -11,7 +11,7 @@ export default StyleSheet.create(
         },
         input_style:{
             flex:1,
-         
+         color:"black",
         },
         logo_container:{ },
         body_container:{}
