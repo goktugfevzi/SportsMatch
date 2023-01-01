@@ -102,12 +102,17 @@ const Sign = ({ navigation }) => {
                     isSecure
                   />
                   <Button text={"Kayıt Ol"} loading={loading} onPress={handleSubmit} />
-                  <Button
-                    text={"Geri"}
-                    theme="secondary"
-                    onPress={handleLogin}
-                    loading={loading}
-                  />
+                  <Text
+                    style={{
+                      color: 'black',
+                      marginTop: 5,
+                      marginBottom: 25,
+                      fontSize: 15,
+                      textAlign: 'center'
+                    }}
+                    onPress={() => navigation.navigate('LoginPage')}>
+                    Zaten bir hesabınız var mı? <Text style={{color: '#3740FE'}}>Giriş yap</Text>
+                  </Text>
                 </View>
               )}
             </Formik>
