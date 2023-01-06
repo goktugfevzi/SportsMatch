@@ -11,20 +11,23 @@ import auth from '@react-native-firebase/auth';
 import { showMessage } from 'react-native-flash-message';
 import authErrorMessageParser from '../../../utils/authErrorMessageParser';
 import { Provider } from "react-native-paper";
-
+import firestore from '@react-native-firebase/firestore'
 const initialFormValues = {
   usermail: '',
   password: '',
   repassword: '',
+  Name: '',
+  Age: '',
+  Height: '',
+  Weight: '',
+  hasTeam: false,
+  isCaptain: false,
+  City: '',
+  Position: '',
+  Team: '',
 };
-
 const Sign = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
-
-  const handleLogin = () => {
-    navigation.goBack();
-  };
-
   const handleFormSubmit = async formValues => {
     if (formValues.password !== formValues.repassword) {
       showMessage({
@@ -52,7 +55,19 @@ const Sign = ({ navigation }) => {
       await auth().createUserWithEmailAndPassword(
         formValues.usermail,
         formValues.password,
-      );
+      ).then(cred => {
+        return firestore().collection('users').doc(cred.user.uid).set({
+          Name: formValues.Name,
+          Age: formValues.Age,
+          Height: formValues.Height,
+          Weight: formValues.Weight,
+          hasTeam: false,
+          isCaptain: false,
+          City: formValues.City,
+          Position: formValues.Position,
+          Team: formValues.Team
+        })
+      });
       setLoading(false);
       showMessage({
         message: 'Kayıt işlemi başarıyla tamamlandı',
@@ -82,11 +97,48 @@ const Sign = ({ navigation }) => {
               {({ values, handleChange, handleSubmit }) => (
                 <View style={styles.body_container}>
                   <Input
+                    value={values.Name}
+                    onChangeText={handleChange('Name')}
+                    placeholder="Adınızı Giriniz"
+                    iconName="name"
+                  />
+                  <Input
                     value={values.usermail}
                     onChangeText={handleChange('usermail')}
                     placeholder="E-postanızı giriniz"
                     iconName="email"
                   />
+                  <Input
+                    value={values.Age}
+                    onChangeText={handleChange('Age')}
+                    placeholder="Yaşınızı Giriniz"
+                    iconName="age"
+                  />
+                  <Input
+                    value={values.Height}
+                    onChangeText={handleChange('Height')}
+                    placeholder="Ağırlığınızı Giriniz"
+                    iconName="height"
+                  />
+                  <Input
+                    value={values.Weight}
+                    onChangeText={handleChange('Weight')}
+                    placeholder="Boyunuzu Giriniz"
+                    iconName="weight"
+                  />
+                  <Input
+                    value={values.City}
+                    onChangeText={handleChange('City')}
+                    placeholder="Şehrinizi Giriniz"
+                    iconName="city"
+                  />
+                  <Input
+                    value={values.Position}
+                    onChangeText={handleChange('Position')}
+                    placeholder="Oynadığınız Pozisyonu Giriniz"
+                    iconName="account"
+                  />
+
                   <Input
                     value={values.password}
                     onChangeText={handleChange('password')}
@@ -110,8 +162,8 @@ const Sign = ({ navigation }) => {
                       fontSize: 15,
                       textAlign: 'center'
                     }}
-                    onPress={() => navigation.navigate('LoginPage')}>
-                    Zaten bir hesabınız var mı? <Text style={{color: '#3740FE'}}>Giriş yap</Text>
+                  >
+                    Zaten bir hesabınız var mı? <Text onPress={() => navigation.navigate('LoginPage')} style={{ color: '#3740FE' }}>Giriş yap</Text>
                   </Text>
                 </View>
               )}

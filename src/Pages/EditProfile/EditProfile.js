@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import {
     View,
     Text,
@@ -15,11 +15,22 @@ import BottomSheet from "../../Components/BottomSheets/BottomSheet";
 import { Provider } from "react-native-paper";
 import ImagePicker from 'react-native-image-crop-picker';
 import EditProfileCard from "../../Components/EditProfileCard/EditProfileCard";
+import auth from "@react-native-firebase/auth";
+import firestore from "@react-native-firebase/firestore"
 
 const EditProfile = ({ navigation }) => {
-
+    const [user, setUser] = useState('')
+    useEffect(() => {
+        firestore()
+            .collection('users')
+            .doc(auth().currentUser.uid)
+            .get().then((doc) => {
+                setUser(doc.data())
+            });
+    }, []);
     const [image, setImage] = useState('https://pbs.twimg.com/media/FZukxoeUsAABmXt.jpg');
 
+    
     const takePhotos = () => {
         ImagePicker.openCamera({
             compressImageMaxWidth: 300,
@@ -88,13 +99,12 @@ const EditProfile = ({ navigation }) => {
                             </TouchableOpacity>
                         </BottomSheet>
 
-                        <EditProfileCard name="user" text="Surname" />
-                        <EditProfileCard name="mail" text="E-mail" />
-                        <EditProfileCard name="phone-call" text="Phone Number" />
-                        <EditProfileCard name="map" text="City" />
-                        <EditProfileCard name="users" text="Team Name" />
-                        <EditProfileCard name="dribbble" text="field" />
-                        <EditProfileCard name="more-vertical" text="Age,foot,weight,height(Pyshcial appearance)" />
+                        <EditProfileCard name="user" text={user.Name} />
+                        <EditProfileCard name="mail" text={auth().currentUser.email} />
+                        <EditProfileCard name="map" text={user.City} />
+                        <EditProfileCard name="gift" text={user.Age} />
+                        <EditProfileCard name="user" text={user.Weight} />
+                        <EditProfileCard name="user" text={user.Height} />
                         <Button text={"Save"} theme={"secondary"} onPress={() => { navigation.goBack("ProfilePage") }} />
                     </KeyboardAvoidingView>
                 </View>

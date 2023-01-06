@@ -5,13 +5,12 @@ export default StyleSheet.create(
         container:{
             padding:0,
             margin:5,
-            backgroundColor:'seashell',
+            backgroundColor:'gray',
             borderRadius: 5,
             flexDirection:'row',
         },
         input_style:{
             flex:1,
-         color:"black",
         },
         logo_container:{ },
         body_container:{}
