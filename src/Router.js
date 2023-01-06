@@ -31,17 +31,10 @@ export default function App() {
   }, []);
 
   //Profile-EditProfile Stack
-  const ProfileStack = ({ navigation }) => {
+  const ProfileStack = () => {
     return (
       <Stack.Navigator>
-        <Stack.Screen name="ProfilePage" component={ProfilePage}
-          options={{
-            headerShown: true,
-            headerRight: () => (<Font name="edit"
-              size={20}
-              color="orange"
-              onPress={() => navigation.navigate('Edit')} />)
-          }} />
+        <Stack.Screen name="ProfilePage" component={ProfilePage} />
         <Stack.Screen name="Edit" component={EditProfile}
           options={{
             headerShown: true,

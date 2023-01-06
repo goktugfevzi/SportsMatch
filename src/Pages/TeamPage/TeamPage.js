@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View, Image } from "react-native";
+import { Text, View, Image, ImageBackground} from "react-native";
 import styles from "./TeamPage.style";
 import FloatingButton from "../../Components/FloatingButton";
 
@@ -16,34 +16,41 @@ function TeamPage({ navigation }) {
                 <Text style={styles.title}>MKE Ankaragücü</Text>
             </View>
             <View style={styles.inner_container}>
+            <ImageBackground source={require("../../assets/Soccer_Field_Transparant.svg.png")} resizeMode="stretch" style={styles.backgroundimage}/>
                 <View style={styles.members_container}>
+                    
+
+                    <View style={styles.forvet}>
+                        <Image style={styles.memberImage} source={{ uri: 'https://img.a.transfermarkt.technology/portrait/header/7043-1483915677.png?lm=1' }} />
+                        <Text style={styles.memberText}>Semih Şentürk</Text>
+                    </View>
+
+
+                    <View style={styles.ortasaha}>
+                        <View style={styles.members}>
+                            <Image style={styles.memberImage} source={{ uri: 'https://img.a.transfermarkt.technology/portrait/header/236471-1629383707.png?lm=1' }} />
+                            <Text style={styles.memberText}>Ozan Tufan</Text>
+                        </View>
+                        <View style={styles.members}>
+                        <   Image style={styles.memberImage} source={{ uri: 'https://img.a.transfermarkt.technology/portrait/header/126414-1663572427.jpg?lm=1' }} />
+                            <Text style={styles.memberText}>Hakan Çalhanoğlu</Text>
+                        </View>
+                    </View>
+
+                    <View style={styles.defans}>
                     <View style={styles.members}>
-                        <Image style={styles.memberImage} source={{ uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFIfHUbDgTWTFXPYBYXJynVvhyUvAfM0OXNQ&usqp=CAU' }} />
-                        <Text style={styles.title}>Panter Necmi</Text>
+                        <Image style={styles.memberImage} source={{ uri: 'https://img.a.transfermarkt.technology/portrait/header/340879-1655706148.jpg?lm=1' }} />
+                        <Text style={styles.memberText}>Merih Demiral</Text>
                     </View>
                     <View style={styles.members}>
-                        <Image style={styles.memberImage} source={{ uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFIfHUbDgTWTFXPYBYXJynVvhyUvAfM0OXNQ&usqp=CAU' }} />
-                        <Text style={styles.title}>Panter Necmi</Text>
+                        <Image style={styles.memberImage} source={{ uri: 'https://img.a.transfermarkt.technology/portrait/header/320141-1662367296.jpg?lm=1' }} />   
+                        <Text style={styles.memberText}>Çağlar Söyüncü</Text>
                     </View>
-                    <View style={styles.members}>
-                        <Image style={styles.memberImage} source={{ uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFIfHUbDgTWTFXPYBYXJynVvhyUvAfM0OXNQ&usqp=CAU' }} />
-                        <Text style={styles.title}>Panter Necmi</Text>
                     </View>
-                    <View style={styles.members}>
-                        <Image style={styles.memberImage} source={{ uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFIfHUbDgTWTFXPYBYXJynVvhyUvAfM0OXNQ&usqp=CAU' }} />
-                        <Text style={styles.title}>Panter Necmi</Text>
-                    </View>
-                    <View style={styles.members}>
-                        <Image style={styles.memberImage} source={{ uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFIfHUbDgTWTFXPYBYXJynVvhyUvAfM0OXNQ&usqp=CAU' }} />
-                        <Text style={styles.title}>Panter Necmi</Text>
-                    </View>
-                    <View style={styles.members}>
-                        <Image style={styles.memberImage} source={{ uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFIfHUbDgTWTFXPYBYXJynVvhyUvAfM0OXNQ&usqp=CAU' }} />
-                        <Text style={styles.title}>Panter Necmi</Text>
-                    </View>
-                    <View style={styles.members}>
-                        <Image style={styles.memberImage} source={{ uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFIfHUbDgTWTFXPYBYXJynVvhyUvAfM0OXNQ&usqp=CAU' }} />
-                        <Text style={styles.title}>Panter Necmi</Text>
+                    
+                    <View style={styles.kaleci}>
+                        <Image style={styles.memberImage} source={{ uri: 'https://img.a.transfermarkt.technology/portrait/header/500091-1667035726.png?lm=1' }} />
+                        <Text style={styles.memberText}>Ersin Korkut</Text>
                     </View>
                 </View>
             </View>

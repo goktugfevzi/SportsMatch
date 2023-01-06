@@ -1,22 +1,21 @@
 import {Dimensions, StyleSheet} from 'react-native';
 
+
 const styles = StyleSheet.create({
     container:{
-        padding:18,
+        padding:12,
         flex:1,
-        backgroundColor:'#EFEFEF'
+        bbackgroundColor:'#F7F7F7',
     },
     team_container:{
         flexDirection:'row',
         padding:6,
-        marginTop:8,
-        borderWidth:2,
-        borderColor:'orange',
+        justifyContent:'center'
     },
     image:{
-        height:80,
-        width:80,
-        borderRadius:40,
+        height:60,
+        width:60,
+        borderRadius:30,
     },
     title:{
         color:'black',
@@ -28,21 +27,28 @@ const styles = StyleSheet.create({
     },
     inner_container:{
         marginTop:24,
-        borderWidth:2,
-        borderColor:'orange',
-        padding:10,
     },
     members_container:{
-        padding:6,
+        width: Dimensions.get('window').width/1.08,
+        height: Dimensions.get('window').height/2,
+        padding:8,
     },
     members:{
-        flexDirection:'row',
-        marginBottom:14,
+        flexDirection:'column',
+        justifyContent:'center',
+        alignItems:'center',
     },
     memberImage:{
-        height:40,
-        width:40,
-        borderRadius:20,
+        height:54,
+        width:54,
+        borderRadius:27,
+        borderWidth:3,
+        borderColor:'orange',
+    },
+    memberText:{
+        color:'black',
+        marginBottom:22,
+        fontStyle:'italic'
     },
     hrElement:{
         height:4,
@@ -51,6 +57,34 @@ const styles = StyleSheet.create({
         position:'relative'
     },
     captain:{},
+
+    backgroundimage:{
+        flex:1,
+        width: Dimensions.get('window').width/1.08,
+        height: Dimensions.get('window').height/2,
+        
+    },
+    forvet:{
+        display:'flex',
+        justifyContent:'center',
+        alignItems:'center',
+    },
+    ortasaha:{
+        display:'flex',
+        flexDirection:'row',
+        alignContent:'center',
+        justifyContent:'space-between',
+    },
+    defans:{
+        display:'flex',
+        flexDirection:'row',
+        alignContent:'center',
+        justifyContent:'space-around',
+    },
+    kaleci:{
+        display:'flex',
+        alignItems:'center',
+    },
 })
 
 export default styles;

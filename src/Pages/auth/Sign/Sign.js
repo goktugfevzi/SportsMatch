@@ -1,6 +1,6 @@
 import {
   View, Text, KeyboardAvoidingView,
-  ScrollView, Image
+  ScrollView, Image,TouchableOpacity
 } from 'react-native';
 import React, { useState } from 'react';
 import styles from './Sign.style';
@@ -12,6 +12,7 @@ import { showMessage } from 'react-native-flash-message';
 import authErrorMessageParser from '../../../utils/authErrorMessageParser';
 import { Provider } from "react-native-paper";
 import firestore from '@react-native-firebase/firestore'
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 const initialFormValues = {
   usermail: '',
   password: '',
@@ -25,8 +26,10 @@ const initialFormValues = {
   City: '',
   Position: '',
   Team: '',
+  Description: '',
 };
 const Sign = ({ navigation }) => {
+  const [show, setShow] = useState(true)
   const [loading, setLoading] = useState(false);
   const handleFormSubmit = async formValues => {
     if (formValues.password !== formValues.repassword) {
@@ -65,7 +68,8 @@ const Sign = ({ navigation }) => {
           isCaptain: false,
           City: formValues.City,
           Position: formValues.Position,
-          Team: formValues.Team
+          Team: formValues.Team,
+          Description: ''
         })
       });
       setLoading(false);
@@ -89,7 +93,7 @@ const Sign = ({ navigation }) => {
         <View style={styles.container}>
           <KeyboardAvoidingView behavior='position'>
             <View style={styles.logo_container}>
-              <Image style={styles.logo} source={require("../../../Components/Images/logo2.png")} />
+              <Image style={styles.logo} source={require("../../../assets/logo2.png")} />
               <Text style={styles.name_style}>SPORTSMATCH</Text>
             </View>
 
@@ -145,6 +149,7 @@ const Sign = ({ navigation }) => {
                     placeholder="Şifrenizi giriniz"
                     iconName="key"
                     isSecure
+                    hidepassword={show} keyboardType='default'
                   />
                   <Input
                     value={values.repassword}
@@ -152,7 +157,14 @@ const Sign = ({ navigation }) => {
                     placeholder="Şifrenizi tekrar giriniz"
                     iconName="key"
                     isSecure
+                    hidepassword={show} keyboardType='default'
                   />
+                  <TouchableOpacity style={{ position: 'absolute', right: 15, marginTop: 81, width: 30, height: 30 }} onPress={() => { setShow(!show) }}>
+                    <MaterialCommunityIcons name={"eye-outline"} size={22} color={"gray"} />
+                  </TouchableOpacity>
+                  <TouchableOpacity style={{ position: 'absolute', right: 15, marginTop: 141, width: 30, height: 30 }} onPress={() => { setShow(!show) }}>
+                    <MaterialCommunityIcons name={"eye-outline"} size={22} color={"gray"} />
+                  </TouchableOpacity>
                   <Button text={"Kayıt Ol"} loading={loading} onPress={handleSubmit} />
                   <Text
                     style={{
