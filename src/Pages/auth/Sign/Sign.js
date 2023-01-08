@@ -13,6 +13,7 @@ import authErrorMessageParser from '../../../utils/authErrorMessageParser';
 import { Provider } from "react-native-paper";
 import firestore from '@react-native-firebase/firestore'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+
 const initialFormValues = {
   usermail: '',
   password: '',
@@ -27,6 +28,7 @@ const initialFormValues = {
   Position: '',
   Team: '',
   Description: '',
+  ImageUrl: '',
 };
 const Sign = ({ navigation }) => {
   const [show, setShow] = useState(true)
@@ -69,7 +71,8 @@ const Sign = ({ navigation }) => {
           City: formValues.City,
           Position: formValues.Position,
           Team: formValues.Team,
-          Description: ''
+          Description: '',
+          ImageUrl: ''
         })
       });
       setLoading(false);

@@ -33,17 +33,15 @@ export default function App() {
   //Profile-EditProfile Stack
   const ProfileStack = () => {
     return (
-      <Stack.Navigator>
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name="ProfilePage" component={ProfilePage} />
-        <Stack.Screen name="Edit" component={EditProfile}
-          options={{
-            headerShown: true,
-            headerRight: () => (<Font name="edit"
-              size={20}
-              color="orange"
-            />)
-          }}
-        />
+        <Stack.Screen name="Edit" component={EditProfile} options={{
+          headerShown: true, headerTitle: 'Kişisel Bilgiler',
+          headerTintColor: 'black',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+        }} />
       </Stack.Navigator>
     );
   }
@@ -130,15 +128,6 @@ export default function App() {
     );
   };
 
-  ////İLK DEFA KAYIT OLAN KULLANICIYI EDİT SAYFASINA YÖNLENDİRME HENÜZ ÇALIŞMIYOR
-  const userTime = "a";
-  const StackEdit = () => {
-    if (!(auth().currentUservariable === null)) {
-      userTime ??= auth().currentUser.metadata;
-    }
-    return (<Stack.Navigator> {(userTime.creationTime) === (userTime.lastSignInTime) ? (<Stack.Screen name="Edit" component={EditProfile} />) : (null)}</Stack.Navigator>);
-  }
-
   //STACK NAVİGATOR FOR AUTH
   const StackNav = () => {
     return (<Stack.Navigator screenOptions={{ headerShown: false }}>
@@ -162,10 +151,7 @@ export default function App() {
               headerStyle: { backgroundColor: 'orange' },
               headerTitle: "SpotsMatch",
               headerTitleAlign: 'center',
-              headerTintColor: 'snow', headerRight: () => (<MaterialCommunityIcons name="logout"
-                size={26}
-                color="snow"
-                onPress={() => auth().signOut()} />),
+              headerTintColor: 'snow',
             }}
           />
         )}

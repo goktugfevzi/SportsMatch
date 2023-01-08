@@ -7,7 +7,8 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 const Input=({placeholder,onChangeText,value,iconname,hidepassword})=>{
     return(
         <View style={styles.container}>
-            <TextInput   placeholderTextColor={"gray"}
+            <TextInput  
+             placeholderTextColor={"gray"}
             style={styles.input_style}
             placeholder={placeholder}
             onChangeText={onChangeText}
