@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react'
-import { View ,Text,ScrollView,Image,} from 'react-native'
+import { View ,Text,ScrollView,TouchableOpacity,TextInput,Image, Button, SafeAreaView} from 'react-native'
 import firestore from '@react-native-firebase/firestore'
 import { Card } from 'react-native-elements'
 import { StyleSheet } from 'react-native'
+import styles2 from './homeSreen.style'
 import BottomSheet from '../../Components/detailBottomSheet/DetailBottomSheet'
 import { Provider } from "react-native-paper";
-import SearchInput from '../../Components/SearchInput'
 
-const HomeScreen=()=>
+import SearchInput from '../../Components/SearchInput'
+import { Value } from 'react-native-reanimated'
+
+const HomeScr=()=>
 {
     const [users, setusers] = useState([])//
     //Teamleri firestoredan çekmek için asenkron metot
@@ -105,7 +108,7 @@ const [team,setTeam]=useState([])
                        <Text > City:{team.city}</Text>
                        <Text style={{fontSize:15}} onPress={()=>{ setshow(true)}}>captain: {team.captain}</Text>
 
-                       <Text>Member1:<Text style={{color:"black"}}  onPress={()=>{
+                       <Text>Member1:<Text style={{color:"#3740FE"}}  onPress={()=>{
                        names=team.mem1
                        searchMem(names)
                        if(member!==""){
@@ -113,11 +116,11 @@ const [team,setTeam]=useState([])
                        }
                        }}>{team.mem1}</Text> </Text>
 
-                       <Text style={{ color: '#3740FE' }}>Member2: {team.mem2}</Text> 
-                       <Text style={{ color: '#3740FE' }}>Member3: {team.mem3}</Text>
-                       <Text style={{ color: '#3740FE' }}>Member4: {team.mem4}</Text>
-                       <Text style={{ color: '#3740FE' }}>Member5: {team.mem5}</Text>
-                       <Text style={{ color: '#3740FE' }}>Member6: {team.mem6}</Text>
+                       <Text>Member2: {team.mem2}</Text> 
+                       <Text>Member3: {team.mem3}</Text>
+                       <Text>Member4: {team.mem4}</Text>
+                       <Text>Member5: {team.mem5}</Text>
+                       <Text>Member6: {team.mem6}</Text>
                        
                        </View>
                     </Card>
@@ -227,4 +230,4 @@ bottomContainer:{
 
 
 })
-export default HomeScreen
+export default HomeScr

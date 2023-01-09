@@ -1,6 +1,6 @@
 import {
-  View, Text, KeyboardAvoidingView,
-  ScrollView, Image,TouchableOpacity
+  View, KeyboardAvoidingView,
+  ScrollView, Image, TouchableOpacity, Text
 } from 'react-native';
 import React, { useState } from 'react';
 import styles from './Sign.style';
@@ -30,7 +30,25 @@ const initialFormValues = {
   Description: '',
   ImageUrl: '',
 };
+
 const Sign = ({ navigation }) => {
+
+  // const [evaProps, setEvaProps] =useState({
+  //   value: '',
+  //   list: [
+  //     { _id: 1, name: 'Eskisehir' },
+  //     { _id: 2, name: 'Kayseri' },
+  //     { _id: 3, name: 'Ankara' },
+  //     { _id: 4, name: 'Corum' },
+  //     { _id: 5, name: 'Istanbul' },
+  //   ],
+  //   selectedList: [],
+  //   error: '',
+  // });
+
+
+
+
   const [show, setShow] = useState(true)
   const [loading, setLoading] = useState(false);
   const handleFormSubmit = async formValues => {
@@ -146,28 +164,35 @@ const Sign = ({ navigation }) => {
                     iconName="account"
                   />
 
-                  <Input
-                    value={values.password}
-                    onChangeText={handleChange('password')}
-                    placeholder="Şifrenizi giriniz"
-                    iconName="key"
-                    isSecure
-                    hidepassword={show} keyboardType='default'
-                  />
-                  <Input
-                    value={values.repassword}
-                    onChangeText={handleChange('repassword')}
-                    placeholder="Şifrenizi tekrar giriniz"
-                    iconName="key"
-                    isSecure
-                    hidepassword={show} keyboardType='default'
-                  />
-                  <TouchableOpacity style={{ position: 'absolute', right: 15, marginTop: 81, width: 30, height: 30 }} onPress={() => { setShow(!show) }}>
-                    <MaterialCommunityIcons name={"eye-outline"} size={22} color={"gray"} />
-                  </TouchableOpacity>
-                  <TouchableOpacity style={{ position: 'absolute', right: 15, marginTop: 141, width: 30, height: 30 }} onPress={() => { setShow(!show) }}>
-                    <MaterialCommunityIcons name={"eye-outline"} size={22} color={"gray"} />
-                  </TouchableOpacity>
+
+                  <View>
+                    <Input
+                      value={values.password}
+                      onChangeText={handleChange('password')}
+                      placeholder="Şifrenizi giriniz"
+                      iconName="key"
+                      isSecure
+                      hidepassword={show} keyboardType='default'
+                    />
+                    <TouchableOpacity style={{ position: 'absolute', display: 'flex', alignSelf: 'flex-end', padding: 20 }} onPress={() => { setShow(!show) }}>
+                      <MaterialCommunityIcons name={"eye-outline"} size={22} color={"gray"} />
+                    </TouchableOpacity>
+
+                  </View>
+                  <View>
+                    <Input
+                      value={values.repassword}
+                      onChangeText={handleChange('repassword')}
+                      placeholder="Şifrenizi tekrar giriniz"
+                      iconName="key"
+                      isSecure
+                      hidepassword={show} keyboardType='default'
+                    />
+                    <TouchableOpacity style={{ position: 'absolute', display: 'flex', alignSelf: 'flex-end', padding: 20 }} onPress={() => { setShow(!show) }}>
+                      <MaterialCommunityIcons name={"eye-outline"} size={22} color={"gray"} />
+                    </TouchableOpacity>
+                  </View>
+
                   <Button text={"Kayıt Ol"} loading={loading} onPress={handleSubmit} />
                   <Text
                     style={{

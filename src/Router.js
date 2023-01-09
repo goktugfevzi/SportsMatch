@@ -4,11 +4,10 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import Font from 'react-native-vector-icons/Feather';
 import Home from './Pages/Homepage/HomeScreen';
 import ProfilePage from "./Pages/ProfilePage/Profile";
-import SearchTeam from './Pages/SearchTeamPage/SearchTeam';
-import Team from './Pages/TeamPage/TeamPage';
+import TeamDetail from './Pages/TeamDetailPage/TeamDetailPage';
+import TeamEdit from './Pages/EditTeamPage/EditTeamPage';
 import Login from './Pages/auth/Login';
 import Invate from './Pages/PlayerInvatePage/InvatePage';
 import Request from './Pages/PlayerInvatePage/RequestPage'
@@ -16,19 +15,28 @@ import Sign from './Pages/auth/Sign';
 import auth from '@react-native-firebase/auth';
 import FlashMessage from 'react-native-flash-message';
 import EditProfile from './Pages/EditProfile';
+import CreateTeam from './Pages/CreateTeamPage/DEmo';
+import firestore from '@react-native-firebase/firestore';
 
 const Stack = createNativeStackNavigator();
 const Tab = createMaterialBottomTabNavigator();
 const TabTop = createMaterialTopTabNavigator();
 
 export default function App() {
-
+  const [user, setUser] = useState('')
   const [userSession, setUserSession] = useState();
   useEffect(() => {
     auth().onAuthStateChanged(user => {
       setUserSession(!!user);
     })
-  }, []);
+    firestore()
+      .collection('users')
+      .doc(auth().currentUser.uid)
+      .get().then((doc) => {
+        setUser(doc.data())
+      });
+  }, [setUser]);
+
 
   //Profile-EditProfile Stack
   const ProfileStack = () => {
@@ -47,13 +55,25 @@ export default function App() {
   }
 
   const TeamStack = () => {
-    return (<Stack.Navigator initialRouteName='Team'>
-      <Stack.Screen name="Team" component={Team} options={{ headerShown: false }} />
-      <Stack.Screen name="TeamTabTop" component={TeamTabTop} options={{ headerShown: false }} />
-    </Stack.Navigator>
+    return (
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
+        {(user.hasTeam == false) ? (
+          <Stack.Screen
+            name="CreateTeamPage"
+            component={CreateTeam}
+            options={{ headerShown: false }} />) : (
+              <Stack.Screen name="HasTeamStack" component={HasTeamStack}  />
+          )}
+          </Stack.Navigator>
     );
   };
-
+const HasTeamStack = () =>{
+  return(   <Stack.Navigator screenOptions={{ headerShown: true }}>
+    <Stack.Screen name="TeamDetailPage" component={TeamDetail}  />
+    <Stack.Screen name="TeamEditPage" component={TeamEdit}  />
+<Stack.Screen name="TeamTabTop" component={TeamTabTop}  />
+</Stack.Navigator>)
+}
   //PlayerInvationPage TopTab
   const TeamTabTop = () => {
     return (
@@ -86,22 +106,22 @@ export default function App() {
           }}
         />
         <Tab.Screen
-          name="SearchTeam"
-          component={SearchTeam}
-          options={{
-            tabBarLabel: 'Search',
-            tabBarIcon: ({ color }) => (
-              <MaterialCommunityIcons name="text-search" color={color} size={26} />
-            ),
-          }}
-        />
-        <Tab.Screen
           name="TeamStack"
           component={TeamStack}
           options={{
             tabBarLabel: 'Team',
             tabBarIcon: ({ color }) => (
               <MaterialCommunityIcons name="account-group" color={color} size={26} />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="Create"
+          component={CreateTeam}
+          options={{
+            tabBarLabel: 'Search',
+            tabBarIcon: ({ color }) => (
+              <MaterialCommunityIcons name="text-search" color={color} size={26} />
             ),
           }}
         />
