@@ -5,7 +5,7 @@ import { createMaterialBottomTabNavigator } from '@react-navigation/material-bot
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Font from 'react-native-vector-icons/Feather';
-import Home from './Pages/Homepage/HomeScreen';
+
 import ProfilePage from "./Pages/ProfilePage/Profile";
 import SearchTeam from './Pages/SearchTeamPage/SearchTeam';
 import Team from './Pages/TeamPage/TeamPage';
@@ -16,6 +16,10 @@ import Sign from './Pages/auth/Sign';
 import auth from '@react-native-firebase/auth';
 import FlashMessage from 'react-native-flash-message';
 import EditProfile from './Pages/EditProfile';
+
+import update from "./Pages/CreateTeamPage/update"
+import CreateTeam from './Pages/CreateTeamPage/DEmo'
+import Home from './Pages/Homepage/HomeScree'
 
 const Stack = createNativeStackNavigator();
 const Tab = createMaterialBottomTabNavigator();
@@ -33,15 +37,17 @@ export default function App() {
   //Profile-EditProfile Stack
   const ProfileStack = () => {
     return (
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Navigator>
         <Stack.Screen name="ProfilePage" component={ProfilePage} />
-        <Stack.Screen name="Edit" component={EditProfile} options={{
-          headerShown: true, headerTitle: 'Kişisel Bilgiler',
-          headerTintColor: 'black',
-          headerTitleStyle: {
-            fontWeight: 'bold',
-          },
-        }} />
+        <Stack.Screen name="Edit" component={EditProfile}
+          options={{
+            headerShown: true,
+            headerRight: () => (<Font name="edit"
+              size={20}
+              color="orange"
+            />)
+          }}
+        />
       </Stack.Navigator>
     );
   }
@@ -53,6 +59,7 @@ export default function App() {
     </Stack.Navigator>
     );
   };
+
 
   //PlayerInvationPage TopTab
   const TeamTabTop = () => {
@@ -85,9 +92,10 @@ export default function App() {
             ),
           }}
         />
+    
         <Tab.Screen
-          name="SearchTeam"
-          component={SearchTeam}
+          name="update"
+          component={update}
           options={{
             tabBarLabel: 'Search',
             tabBarIcon: ({ color }) => (
@@ -95,16 +103,18 @@ export default function App() {
             ),
           }}
         />
-        <Tab.Screen
-          name="TeamStack"
-          component={TeamStack}
+         <Tab.Screen
+          name="Create"
+          component={CreateTeam}
           options={{
-            tabBarLabel: 'Team',
+            tabBarLabel: 'Search',
             tabBarIcon: ({ color }) => (
-              <MaterialCommunityIcons name="account-group" color={color} size={26} />
+              <MaterialCommunityIcons name="text-search" color={color} size={26} />
             ),
           }}
         />
+        
+        
         <Tab.Screen
           name="Profile"
           component={ProfileStack}
@@ -127,6 +137,15 @@ export default function App() {
       </Stack.Navigator>
     );
   };
+
+  ////İLK DEFA KAYIT OLAN KULLANICIYI EDİT SAYFASINA YÖNLENDİRME HENÜZ ÇALIŞMIYOR
+  const userTime = "a";
+  const StackEdit = () => {
+    if (!(auth().currentUservariable === null)) {
+      userTime ??= auth().currentUser.metadata;
+    }
+    return (<Stack.Navigator> {(userTime.creationTime) === (userTime.lastSignInTime) ? (<Stack.Screen name="Edit" component={EditProfile} />) : (null)}</Stack.Navigator>);
+  }
 
   //STACK NAVİGATOR FOR AUTH
   const StackNav = () => {
@@ -151,7 +170,10 @@ export default function App() {
               headerStyle: { backgroundColor: 'orange' },
               headerTitle: "SpotsMatch",
               headerTitleAlign: 'center',
-              headerTintColor: 'snow',
+              headerTintColor: 'snow', headerRight: () => (<MaterialCommunityIcons name="logout"
+                size={26}
+                color="snow"
+                onPress={() => auth().signOut()} />),
             }}
           />
         )}

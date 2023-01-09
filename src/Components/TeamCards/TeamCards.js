@@ -8,8 +8,7 @@ function Teams(props){
         <View style={styles.container}>
             <View style={styles.teams}>
             <TouchableOpacity>
-                    <Image style={styles.image} source={{uri: props.team.imageUrl}} />
-                    </TouchableOpacity>
+                                        </TouchableOpacity>
                 <View style={styles.inner_container}>
                     <Text style={styles.title}>{props.team.title}</Text>
                     <Text style={styles.captain}>{props.team.captain}</Text>

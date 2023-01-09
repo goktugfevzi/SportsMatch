@@ -5,7 +5,7 @@ import teamData from '../../team-data.json';
 import Teams from "../../Components/TeamCards";
 import SearchInput from "../../Components/SearchInput";
 
-function SearchTeam() {
+function SearchTeam({navigation}) {
 
     const [team, SetTeam] = useState(teamData)
     const text = "Takım Detayları";
