@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { SafeAreaView, Text, View, Image } from "react-native";
+import { SafeAreaView, Text, View, Image, ImageBackground } from "react-native";
 import styles from "./profile.style";
 import Button from "../../Components/Button";
 import firestore from "@react-native-firebase/firestore";
 import auth from '@react-native-firebase/auth'
 import storage from '@react-native-firebase/storage';
+import Icon from 'react-native-vector-icons/Ionicons';
+import Input from "../../Components/LoginInput/Input";
 
 function Profile({ navigation }) {
     const [imageName, setImageName] = useState('https://pbs.twimg.com/media/FZukxoeUsAABmXt.jpg');
@@ -29,21 +31,80 @@ function Profile({ navigation }) {
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.person_container}>
-                <Image source={{uri : imageName.profileImageUrl}} style={styles.image} />
-                <Text style={styles.title}></Text>
+                <Image source={{ uri: imageName.profileImageUrl }} style={styles.image} />
+            </View>
+            <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 14 }}>
+                <View style={{ flex: 1, height: 2, backgroundColor: 'orange' }} />
+                <View>
+                    <Text style={{ width: 170, textAlign: 'center', fontWeight: 'bold', color: '#006400' }}>Oyuncu Profili</Text>
+                </View>
+                <View style={{ flex: 1, height: 2, backgroundColor: 'orange' }} />
             </View>
             <View style={styles.inner_container}>
-                <Text style={styles.info}> Ad         :  {user.Name}  </Text>
-                <Text style={styles.info}> Şehir :     {user.City}</Text>
-                <Text style={styles.info}> Boy       :    {user.Weight}</Text>
-                <Text style={styles.info}> Kilo       :     {user.Height}</Text>
-                <Text style={styles.info}> Takım   :     {!(user.Team) ? "Takımı Yok" : user.Team}</Text>
-                <Text style={styles.info}> Mevki   :     {user.Position}</Text>
-                <Text style={styles.info}> Yaş       :     {user.Age}  </Text>
+                <View style={styles.person}>
+                    <Text style={styles.info}>      Ad :</Text>
+                    <View style={{ flexDirection: 'row', marginLeft: '29%' }}>
+                        <View style={{ flexDirection: 'row', }}>
+                            <Icon name="ios-person" size={20} color="#006400" />
+                            <Text style={styles.info}>{user.Name}</Text>
+                        </View>
+                    </View>
+                </View>
+
+                <View style={styles.person}>
+                    <Text style={styles.info}>  Şehir :</Text>
+                    <View style={{ flexDirection: 'row', marginLeft: '29%' }}>
+                        <Icon name="business" size={20} color="#006400" />
+                        <Text style={styles.info}> {user.City}</Text>
+                    </View>
+                </View>
+
+                <View style={styles.person}>
+                    <Text style={styles.info}>    Boy :</Text>
+                    <View style={{ flexDirection: 'row', marginLeft: '29%' }}>
+                        <Icon name="md-ellipsis-vertical" size={20} color="#006400" />
+                        <Text style={styles.info}> {user.Height}</Text>
+                    </View>
+                </View>
+
+                <View style={styles.person}>
+                    <Text style={styles.info}>    Kilo :</Text>
+                    <View style={{ flexDirection: 'row', marginLeft: '29%' }}>
+                        <Icon name="ios-barbell-sharp" size={20} color="#006400" />
+                        <Text style={styles.info}> {user.Weight}</Text>
+                    </View>
+                </View>
+
+                <View style={styles.person}>
+                    <Text style={styles.info}>Takım :</Text>
+                    <View style={{ flexDirection: 'row', marginLeft: '29%' }}>
+                        <Icon name="shirt" size={20} color="#006400" />
+                        <Text style={styles.info}>{!(user.Team) ? "Takımı Yok" : user.Team}</Text>
+                    </View>
+                </View>
+
+                <View style={styles.person}>
+                    <Text style={styles.info}>Mevki :</Text>
+                    <View style={{ flexDirection: 'row', marginLeft: '29%' }}>
+                        <Icon name="ios-football-sharp" size={20} color="#006400" />
+                        <Text style={styles.info}> {user.Position}</Text>
+                    </View>
+                </View>
+
+                <View style={styles.person}>
+                    <Text style={styles.info}>    Yaş :</Text>
+                    <View style={{ flexDirection: 'row', marginLeft: '29%' }}>
+                        <Icon name="calendar-sharp" size={20} color="#006400" />
+                        <Text style={styles.info}> {user.Age}</Text>
+                    </View>
+                </View>
+
             </View>
-            <View style={styles.description}>
-                <Text style={styles.info}>{user.Description}</Text>
-            </View>
+            <Input placeholder={"Kendinizi tanıtın...."}  />
+            {/* <View style={styles.text_container}> 
+             <Text style={styles.text_style}>{user.Description}</Text>
+             </View> */}
+
             <Button color={"#fff"} icon={"account-edit"}
                 onPress={() => navigation.navigate('Edit', { userToUpdate: user })} />
             <View>

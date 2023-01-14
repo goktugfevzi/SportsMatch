@@ -1,21 +1,19 @@
 import { Dimensions, StyleSheet } from "react-native";
-import colors from "../../../styles/colors"
 
 export default StyleSheet.create({
     body_container:{
-        resizeMode:'contain',
-        justifyContent:'space-around',
         flex:1,
+        marginTop:20,
     },
-       container:{
-        justifyContent:'space-evenly',
-        flex:1,
-        backgroundColor:"snow"
-    },
+    
     logo_container:{
         
         backgroundColor:'snow'
 
+     },
+     backgroundImage:{
+        height:Dimensions.get('window').height,
+            width:Dimensions.get('window').width,
      },
     logo:{
         height: Dimensions.get('window').height/2,

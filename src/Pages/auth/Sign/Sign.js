@@ -1,6 +1,6 @@
 import {
   View, KeyboardAvoidingView,
-  ScrollView, Image, TouchableOpacity, Text
+  ScrollView, Image, TouchableOpacity, Text ,ImageBackground
 } from 'react-native';
 import React, { useState } from 'react';
 import styles from './Sign.style';
@@ -10,7 +10,6 @@ import { Formik } from 'formik';
 import auth from '@react-native-firebase/auth';
 import { showMessage } from 'react-native-flash-message';
 import authErrorMessageParser from '../../../utils/authErrorMessageParser';
-import { Provider } from "react-native-paper";
 import firestore from '@react-native-firebase/firestore'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -22,33 +21,11 @@ const initialFormValues = {
   Age: '',
   Height: '',
   Weight: '',
-  hasTeam: false,
-  isCaptain: false,
   City: '',
   Position: '',
-  Team: '',
-  Description: '',
-  ImageUrl: '',
 };
 
 const Sign = ({ navigation }) => {
-
-  // const [evaProps, setEvaProps] =useState({
-  //   value: '',
-  //   list: [
-  //     { _id: 1, name: 'Eskisehir' },
-  //     { _id: 2, name: 'Kayseri' },
-  //     { _id: 3, name: 'Ankara' },
-  //     { _id: 4, name: 'Corum' },
-  //     { _id: 5, name: 'Istanbul' },
-  //   ],
-  //   selectedList: [],
-  //   error: '',
-  // });
-
-
-
-
   const [show, setShow] = useState(true)
   const [loading, setLoading] = useState(false);
   const handleFormSubmit = async formValues => {
@@ -82,13 +59,14 @@ const Sign = ({ navigation }) => {
         return firestore().collection('users').doc(cred.user.uid).set({
           Name: formValues.Name,
           Age: formValues.Age,
+          id: cred.user.uid,
           Height: formValues.Height,
           Weight: formValues.Weight,
           hasTeam: false,
           isCaptain: false,
           City: formValues.City,
           Position: formValues.Position,
-          Team: formValues.Team,
+          Team: '',
           Description: '',
           ImageUrl: ''
         })
@@ -99,6 +77,7 @@ const Sign = ({ navigation }) => {
         type: 'success',
       });
     } catch (error) {
+      console.log(error);
       setLoading(false);
       showMessage({
         message: authErrorMessageParser(error.code),
@@ -109,18 +88,13 @@ const Sign = ({ navigation }) => {
   };
 
   return (
-    <Provider >
-      <ScrollView>
+ 
         <View style={styles.container}>
-          <KeyboardAvoidingView behavior='position'>
-            <View style={styles.logo_container}>
-              <Image style={styles.logo} source={require("../../../assets/logo2.png")} />
-              <Text style={styles.name_style}>SPORTSMATCH</Text>
-            </View>
-
+          <ImageBackground  style={styles.backgroundImage} source={require("../../../assets/deneme4.jpeg")}  resizeMode='cover' >
             <Formik initialValues={initialFormValues} onSubmit={handleFormSubmit}>
               {({ values, handleChange, handleSubmit }) => (
                 <View style={styles.body_container}>
+                 
                   <Input
                     value={values.Name}
                     onChangeText={handleChange('Name')}
@@ -208,10 +182,9 @@ const Sign = ({ navigation }) => {
                 </View>
               )}
             </Formik>
-          </KeyboardAvoidingView>
+            </ImageBackground>
         </View>
-      </ScrollView>
-    </Provider>
+     
   );
 };
 

@@ -22,9 +22,6 @@ import Input from '../../Components/LoginInput';
 import storage from '@react-native-firebase/storage';
 
 const initialFormValues = {
-  usermail: '',
-  password: '',
-  repassword: '',
   Name: '',
   Age: '',
   Height: '',
@@ -32,9 +29,11 @@ const initialFormValues = {
   City: '',
   Position: '',
   Description: '',
-  ImageUrl: '',
 };
+
 const EditProfile = ({ navigation }) => {
+
+  const [loading, setLoading] = useState(false);
   const [user, setUser] = useState('')
   const [image, setImage] = useState('https://pbs.twimg.com/media/FZukxoeUsAABmXt.jpg');
   useEffect(() => {
@@ -45,6 +44,7 @@ const EditProfile = ({ navigation }) => {
         setUser(doc.data())
       });
   }, []);
+
   useEffect(()=>{
     storage().ref('userImage/' + auth().currentUser.uid)
     .getDownloadURL()
@@ -53,7 +53,7 @@ const EditProfile = ({ navigation }) => {
     })
     .catch((e) => console.log('getting downloadURL of image error => ', e));
   },[setImage])
-  const [loading, setLoading] = useState(false);
+
   const handleFormSubmit = async formValues => {
     let Name = user.Name
     let Age = user.Age
@@ -115,6 +115,7 @@ const EditProfile = ({ navigation }) => {
     }
   };
   // FOR IMAGE UPDATING
+  const [show, setshow] = useState(false);
   const takePhotos = () => {
     ImagePicker.openCamera({
       compressImageMaxWidth: 300,
@@ -122,7 +123,6 @@ const EditProfile = ({ navigation }) => {
       cropping: true,
       compressImageQuality: 0.7,
     }).then(async image => {
-
       console.log(image.path);
       setImage(image.path);
       const reference = storage().ref('userImage/' + auth().currentUser.uid);
@@ -140,6 +140,7 @@ const EditProfile = ({ navigation }) => {
       }
     });
   }
+
   const choosePhotos = () => {
     ImagePicker.openPicker({
       compressImageMaxWidth: 300,
@@ -164,8 +165,7 @@ const EditProfile = ({ navigation }) => {
       }
     });
   }
-
-  const [show, setshow] = useState(false);
+  
   return (
     <Provider>
       <ScrollView>
@@ -207,6 +207,7 @@ const EditProfile = ({ navigation }) => {
               </TouchableOpacity>
             </BottomSheet>
 
+
             <Formik initialValues={initialFormValues} onSubmit={handleFormSubmit}>
               {({ values, handleChange, handleSubmit }) => (
                 <View style={styles.body_container}>
@@ -243,7 +244,7 @@ const EditProfile = ({ navigation }) => {
                   <Input
                     value={values.Description}
                     onChangeText={handleChange('Description')}
-                    placeholder="Şehrinizi Giriniz"
+                    placeholder="Hakkınızda yazınız"
                     iconName="city"
                   />
                   <Input
@@ -267,5 +268,3 @@ const EditProfile = ({ navigation }) => {
   )
 }
 export default EditProfile;
-
-
