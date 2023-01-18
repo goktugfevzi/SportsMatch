@@ -1,11 +1,12 @@
 
-import { Text, SafeAreaView, View, Image, ImageBackground, TouchableOpacity } from "react-native";
+import { Text, SafeAreaView, View, Image, ImageBackground, TouchableOpacity,StyleSheet } from "react-native";
 import styles from "./TeamDetailPage.style";
 import React, { useEffect, useState } from 'react'
 import firestore from '@react-native-firebase/firestore'
 import { Provider } from "react-native-paper";
 import BottomSheet from '../../Components/detailBottomSheet/DetailBottomSheet'
 import Storage from "@react-native-firebase/storage";
+import Icon from "react-native-vector-icons/Ionicons";
 
 function TeamDetailPage({ navigation, route }) {
 
@@ -36,9 +37,6 @@ function TeamDetailPage({ navigation, route }) {
             })
         )
     }
-
-
-
 
     const searchMem = async (name) => {//Sorgu
         const collection = await firestore().collection('users').where('Name', '==', name).get()
@@ -73,20 +71,22 @@ function TeamDetailPage({ navigation, route }) {
             }
         } catch (error) {
             console.log(error)
-            setImageUrl(img)
+            setImageUrl('https://pbs.twimg.com/media/FZukxoeUsAABmXt.jpg')
         }
 
     }
 
-   
+
 
     return (
         <Provider>
             <SafeAreaView>
                 {team.map(
-                    teams => {
+                    (teams, index) => {
                         return (
-                            <View key={teams.id}>
+                            <View key={index}>
+                                <View>
+                                <Image source={require("../../assets/deneme3.jpg")} style={StyleSheet.absoluteFillObject}  blurRadius={1} /></View>
                                 <View style={styles.team_container}>
                                     <Image style={styles.image} source={{ uri: teams.ImageUrl }} />
                                     <Text style={styles.title}>{teams.name}</Text>
@@ -121,7 +121,6 @@ function TeamDetailPage({ navigation, route }) {
                                                     <Text style={styles.memberText}>{teams.mem1}</Text>
                                                 </TouchableOpacity>
                                             </View>
-
                                             <View style={styles.members}>
                                                 <TouchableOpacity onPress={() => {
                                                     if (teams.mem2) {
@@ -134,7 +133,6 @@ function TeamDetailPage({ navigation, route }) {
                                                     <Text style={styles.memberText}>{teams.mem2}</Text>
                                                 </TouchableOpacity>
                                             </View>
-
                                         </View>
 
                                         <View style={styles.defans}>
@@ -187,64 +185,163 @@ function TeamDetailPage({ navigation, route }) {
                     {member.map(mem => {
 
                         func(mem.id)
-
-                        //console.log(mem.id)
-                        //console.log("/userImage/"+mem.id)
-                        return (
-
-                            <View style={{ alignItems: "center" }}>
-
-                                <Image style={{ width: 200, height: 200 }} source={{ uri: imageUrl }} />
-
-                                <Text style={{ fontSize: 25, color: "black", fontWeight: "bold", padding: 10 }}>{mem.Name}</Text>
-
-
-                                <View style={styles.memContainer}>
-                                    <Text style={{ fontSize: 15, color: "gray", fontWeight: "bold" }} > Age:{mem.Age}</Text>
-
-                                </View >
-                                <View style={styles.memContainer}>
-                                    <Text style={{ fontSize: 15, color: "gray", fontWeight: "bold" }} >City: {mem.City}</Text>
+                        if (mem.isCaptain) {
+                            return (
+                                <View key={mem.id} style={{alignItems:'center',}} >
+                                <Image style={{ width: 150, height: 150,borderRadius:75,marginTop:20 }} source={{ uri: imageUrl }} />
+                                <View>
+                                    <Text style={{fontSize:12,marginTop:8,fontStyle:'italic', color:"gray"}}>{mem.email}</Text>
                                 </View>
-                                <View style={styles.memContainer}>
-                                    <Text style={{ fontSize: 15, color: "gray", fontWeight: "bold" }} >Description: {mem.Description}</Text>
-                                </View>
-                                <View style={styles.memContainer}>
-                                    <Text style={{ fontSize: 15, color: "gray", fontWeight: "bold" }} >Height: {mem.Height}</Text>
-                                </View>
-                                <View style={styles.memContainer}>
-                                    <Text style={{ fontSize: 15, color: "gray", fontWeight: "bold" }} >Team:{mem.Team}</Text>
-                                </View>
-                                <View style={styles.memContainer}>
-                                    <Text style={{ fontSize: 15, color: "gray", fontWeight: "bold" }} >Position: {mem.Position}</Text>
-                                </View>
-                                <View style={styles.memContainer}>
-                                    <Text style={{ fontSize: 15, color: "gray", fontWeight: "bold" }} >Weight: {mem.Weight}</Text>
-                                </View>
-                                <View style={styles.memContainer}>
-                                    <Text style={{ fontSize: 15, color: "gray", fontWeight: "bold" }} >id: {mem.id}</Text>
+                                <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 8 }}>
+                                    <View style={{ flex: 1, height: 2, backgroundColor: 'orange' }} />
+                                    <View>
+                                        <Text style={{ width: 170, textAlign: 'center', fontWeight: 'bold', color: '#006400' }}>Oyuncu Profili</Text>
+                                    </View>
+                                    <View style={{ flex: 1, height: 2, backgroundColor: 'orange' }} />
                                 </View>
 
+                                <View style={{marginLeft:50,marginTop:30}}>
+                                    <View style={styles.person}>
+                                        <Text style={styles.info}>      Ad :</Text>
+                                        <View style={{ flexDirection: 'row', marginLeft: '15%' }}>
+                                            <View style={{ flexDirection: 'row', }}>
+                                                <Icon name="ios-person" size={20} color="#006400" />
+                                                <Text style={styles.info}>{mem.Name}</Text>
+                                            </View>
+                                        </View>
+                                    </View>
 
+                                    <View style={styles.person}>
+                                        <Text style={styles.info}>  Şehir :</Text>
+                                        <View style={{ flexDirection: 'row', marginLeft: '15%' }}>
+                                            <Icon name="business" size={20} color="#006400" />
+                                            <Text style={styles.info}> {mem.City}</Text>
+                                        </View>
+                                    </View>
+
+                                    <View style={styles.person}>
+                                        <Text style={styles.info}>    Boy :</Text>
+                                        <View style={{ flexDirection: 'row', marginLeft: '15%' }}>
+                                            <Icon name="md-ellipsis-vertical" size={20} color="#006400" />
+                                            <Text style={styles.info}> {mem.Height}</Text>
+                                        </View>
+                                    </View>
+
+                                    <View style={styles.person}>
+                                        <Text style={styles.info}>    Kilo :</Text>
+                                        <View style={{ flexDirection: 'row', marginLeft: '15%' }}>
+                                            <Icon name="ios-barbell-sharp" size={20} color="#006400" />
+                                            <Text style={styles.info}> {mem.Weight}</Text>
+                                        </View>
+                                    </View>
+
+                                    <View style={styles.person}>
+                                        <Text style={styles.info}>Takım :</Text>
+                                        <View style={{ flexDirection: 'row', marginLeft: '15%' }}>
+                                            <Icon name="shirt" size={20} color="#006400" />
+                                            <Text style={styles.info}>{!(mem.Team) ? "Takımı Yok" : mem.Team}</Text>
+                                        </View>
+                                    </View>
+
+                                    <View style={styles.person}>
+                                        <Text style={styles.info}>Mevki :</Text>
+                                        <View style={{ flexDirection: 'row', marginLeft: '15%' }}>
+                                            <Icon name="ios-football-sharp" size={20} color="#006400" />
+                                            <Text style={styles.info}> {mem.Position}</Text>
+                                        </View>
+                                    </View>
+
+                                    <View style={styles.person}>
+                                        <Text style={styles.info}>    Yaş :</Text>
+                                        <View style={{ flexDirection: 'row', marginLeft: '15%' }}>
+                                            <Icon name="calendar-sharp" size={20} color="#006400" />
+                                            <Text style={styles.info}> {mem.Age}</Text>
+                                        </View>
+                                    </View>
+                                </View>
                             </View>
+                            )
+                        }
+                        else {
+                            return (
+                                <View key={mem.id} style={{alignItems:'center',}} >
+                                <Image style={{ width: 150, height: 150,borderRadius:75,marginTop:20 }} source={{ uri: imageUrl }} />
+                                <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 8 }}>
+                                    <View style={{ flex: 1, height: 2, backgroundColor: 'orange' }} />
+                                    <View>
+                                        <Text style={{ width: 170, textAlign: 'center', fontWeight: 'bold', color: '#006400' }}>Oyuncu Profili</Text>
+                                    </View>
+                                    <View style={{ flex: 1, height: 2, backgroundColor: 'orange' }} />
+                                </View>
 
+                                <View style={{marginLeft:50,marginTop:30}}>
+                                    <View style={styles.person}>
+                                        <Text style={styles.info}>      Ad :</Text>
+                                        <View style={{ flexDirection: 'row', marginLeft: '15%' }}>
+                                            <View style={{ flexDirection: 'row', }}>
+                                                <Icon name="ios-person" size={20} color="#006400" />
+                                                <Text style={styles.info}>{mem.Name}</Text>
+                                            </View>
+                                        </View>
+                                    </View>
 
-                        )
-                    }
-                    )
+                                    <View style={styles.person}>
+                                        <Text style={styles.info}>  Şehir :</Text>
+                                        <View style={{ flexDirection: 'row', marginLeft: '15%' }}>
+                                            <Icon name="business" size={20} color="#006400" />
+                                            <Text style={styles.info}> {mem.City}</Text>
+                                        </View>
+                                    </View>
 
-                    }
+                                    <View style={styles.person}>
+                                        <Text style={styles.info}>    Boy :</Text>
+                                        <View style={{ flexDirection: 'row', marginLeft: '15%' }}>
+                                            <Icon name="md-ellipsis-vertical" size={20} color="#006400" />
+                                            <Text style={styles.info}> {mem.Height}</Text>
+                                        </View>
+                                    </View>
+
+                                    <View style={styles.person}>
+                                        <Text style={styles.info}>    Kilo :</Text>
+                                        <View style={{ flexDirection: 'row', marginLeft: '15%' }}>
+                                            <Icon name="ios-barbell-sharp" size={20} color="#006400" />
+                                            <Text style={styles.info}> {mem.Weight}</Text>
+                                        </View>
+                                    </View>
+
+                                    <View style={styles.person}>
+                                        <Text style={styles.info}>Takım :</Text>
+                                        <View style={{ flexDirection: 'row', marginLeft: '15%' }}>
+                                            <Icon name="shirt" size={20} color="#006400" />
+                                            <Text style={styles.info}>{!(mem.Team) ? "Takımı Yok" : mem.Team}</Text>
+                                        </View>
+                                    </View>
+
+                                    <View style={styles.person}>
+                                        <Text style={styles.info}>Mevki :</Text>
+                                        <View style={{ flexDirection: 'row', marginLeft: '15%' }}>
+                                            <Icon name="ios-football-sharp" size={20} color="#006400" />
+                                            <Text style={styles.info}> {mem.Position}</Text>
+                                        </View>
+                                    </View>
+
+                                    <View style={styles.person}>
+                                        <Text style={styles.info}>    Yaş :</Text>
+                                        <View style={{ flexDirection: 'row', marginLeft: '15%' }}>
+                                            <Icon name="calendar-sharp" size={20} color="#006400" />
+                                            <Text style={styles.info}> {mem.Age}</Text>
+                                        </View>
+                                    </View>
+                                </View>
+                            </View>
+                            )
+                        }
+                    })}
                 </BottomSheet>
             </View>
-
-
         </Provider>
-
-
     );
-
-
-
 }
 
 export default TeamDetailPage;
+

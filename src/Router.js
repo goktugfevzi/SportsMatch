@@ -27,32 +27,34 @@ const TabTop = createMaterialTopTabNavigator();
 export default function App() {
   const [user, setUser] = useState('')
   const [userSession, setUserSession] = useState();
-  
   useEffect(() => {
     auth().onAuthStateChanged(user => {
       setUserSession(!!user);
     })
+    firestore().collection("users").where("id","==",auth().currentUser?.uid).onSnapshot(querySnapShot =>{
+      querySnapShot.docChanges().forEach(change=>{
+        fetchUser();
+      })})
     try {
-      firestore()
-      .collection('users')
-      .doc(auth().currentUser.uid)
-      .get().then((doc) => {
-        setUser(doc.data())
-      });
+      fetchUser();
     } catch (error) {
       console.log(error);
     }
-  
-  }, [setUser]);
+  }, []);
 
-
+const fetchUser = () =>{firestore()
+  .collection('users')
+  .doc(auth().currentUser.uid)
+  .get().then((doc) => {
+    setUser(doc.data())
+  });}
   //Profile-EditProfile Stack
   const ProfileStack = () => {
     return (
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name="ProfilePage" component={ProfilePage} />
         <Stack.Screen name="Edit" component={EditProfile} options={{
-          headerShown: true, headerTitle: 'Kişisel Bilgiler',
+          headerShown: false, headerTitle: 'Kişisel Bilgiler',
           headerTintColor: 'black',
           headerTitleStyle: {
             fontWeight: 'bold',
@@ -65,7 +67,7 @@ export default function App() {
   const TeamStack = () => {
     return (
       <Stack.Navigator screenOptions={{ headerShown: false }}>
-        {(user.hasTeam == false) ? (
+        {(user.hasTeam === false) ? (
           <Stack.Screen
             name="CreateTeamPage"
             component={CreateTeam}
@@ -76,8 +78,8 @@ export default function App() {
     );
   };
   const HasTeamStack = () => {
-    return (<Stack.Navigator screenOptions={{ headerShown: true }}>
-      <Stack.Screen name="MyTeamDetailPage" component={MyTeamDetail} />
+    return (<Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="MyTeamDetailPage" component={MyTeamDetail} options={{headerShown:false}} />
       <Stack.Screen name="TeamEditPage" component={TeamEdit} />
       <Stack.Screen name="TeamTabTop" component={TeamTabTop} />
     </Stack.Navigator>)
@@ -109,7 +111,8 @@ export default function App() {
       <Tab.Navigator
         shifting={true}
         activeColor="#e91e63"
-        barStyle={{ backgroundColor: 'orange' }}>
+        barStyle={{ backgroundColor: 'orange' }}
+        headerShown= {true}>
         <Tab.Screen
           name="HomeStack"
           component={HomeStack}

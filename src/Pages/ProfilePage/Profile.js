@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { SafeAreaView, Text, View, Image, ImageBackground } from "react-native";
+import { SafeAreaView, Text, View, Image, StyleSheet} from "react-native";
 import styles from "./profile.style";
 import Button from "../../Components/Button";
 import firestore from "@react-native-firebase/firestore";
@@ -14,24 +14,30 @@ function Profile({ navigation }) {
     const [user, setUser] = useState('')
 
     useEffect(() => {
+        setLoading(true);
         firestore()
             .collection('users')
             .doc(auth().currentUser.uid)
             .get().then((doc) => {
                 setUser(doc.data())
             });
+            console.log(user);
         storage().ref('userImage/' + auth().currentUser.uid)
             .getDownloadURL()
             .then((url) => {
-                setImageName({ profileImageUrl: url });
+                if(url){
+                setImageName( url );}
             })
             .catch((e) => console.log('getting downloadURL of image error => ', e));
+            setLoading(false);
         navigation.addListener("focus", () => setLoading(!loading));
+        setLoading(false);
     }, [navigation, loading]);
     return (
         <SafeAreaView style={styles.container}>
+                                <Image source={require("../../assets/deneme3.jpg")} style={StyleSheet.absoluteFillObject}  blurRadius={7} />
             <View style={styles.person_container}>
-                <Image source={{ uri: imageName.profileImageUrl }} style={styles.image} />
+                <Image source={{ uri: imageName }} style={styles.image} />
             </View>
             <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 14 }}>
                 <View style={{ flex: 1, height: 2, backgroundColor: 'orange' }} />
@@ -100,11 +106,10 @@ function Profile({ navigation }) {
                 </View>
 
             </View>
-            <Input placeholder={"Kendinizi tanıtın...."}  />
-            {/* <View style={styles.text_container}> 
-             <Text style={styles.text_style}>{user.Description}</Text>
-             </View> */}
-
+            <View style={styles.text_container}> 
+            {(user.Description)?  <Text style={styles.text_style_true}>{user.Description}</Text>:  <Text style={styles.text_style_false}>{"Kendinizi Tanıtınız.."}</Text>}
+             </View>
+            
             <Button color={"#fff"} icon={"account-edit"}
                 onPress={() => navigation.navigate('Edit', { userToUpdate: user })} />
             <View>

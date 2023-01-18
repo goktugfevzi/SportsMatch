@@ -16,7 +16,6 @@ const initialFormValues = {
     mem3: "",
     mem4: "",
     mem5: "",
-    mem6: "",
     city: "",
 };
 const CreateTeamPage = ({ navigation }) => {
@@ -67,7 +66,6 @@ const CreateTeamPage = ({ navigation }) => {
     }
 
     const handleFormSubmit = async formValues => {
-        let mem6_id = "";
         let mem5_id = "";
         let mem4_id = "";
         let mem3_id = "";
@@ -103,13 +101,6 @@ const CreateTeamPage = ({ navigation }) => {
             const y5 = await hasteamControl(mem5_id)
             if (y5) {
                 mem5_id = mem5_id[0].id;
-            } else { return; }
-        }
-        if (formValues.mem6) {
-            mem6_id = await searchMem(formValues.mem6);
-            const y6 = await hasteamControl(mem6_id)
-            if (y6) {
-                mem6_id = mem6_id[0].id;
             } else { return; }
         }
         //TAKIMA SAHİP Mİ VE FORMDAN ALINIYOR MU KONTROLÜ
@@ -155,9 +146,11 @@ const CreateTeamPage = ({ navigation }) => {
                     mem1: formValues.mem1,
                     mem2: formValues.mem2,
                     mem3: formValues.mem3,
+                    mem4: formValues.mem4,
+                    mem5: formValues.mem5,
                     city: formValues.city,
                     id: "",
-                    ImageUrl: "",
+                    ImageUrl: "https://upload.wikimedia.org/wikipedia/commons/1/1d/Football_Pallo_valmiina-cropped.jpg",
                     type: "team"
                 }
             ).then(() => {
@@ -198,14 +191,7 @@ const CreateTeamPage = ({ navigation }) => {
                         })
                     }
                 }
-                {
-                    if (mem6_id) {
-                        firestore().collection('users').doc(mem6_id).update({
-                            hasTeam: true,
-                            Team: formValues.name,
-                        })
-                    }
-                }
+            
             }).catch(e => {
                 console.log(e)
             });
@@ -280,12 +266,7 @@ const CreateTeamPage = ({ navigation }) => {
                                         placeholder="5. Oyuncu..."
                                         iconName="height"
                                     />
-                                    <Input
-                                        value={values.mem6}
-                                        onChangeText={handleChange('mem6')}
-                                        placeholder="6. Oyuncu..."
-                                        iconName="height"
-                                    />
+                                  
 
                                     <Button text={"Takım Oluştur"} loading={loading} onPress={handleSubmit} />
                                 </View>

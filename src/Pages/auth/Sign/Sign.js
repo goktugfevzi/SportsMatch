@@ -58,6 +58,7 @@ const Sign = ({ navigation }) => {
       ).then(cred => {
         return firestore().collection('users').doc(cred.user.uid).set({
           Name: formValues.Name,
+          email: formValues.usermail,
           Age: formValues.Age,
           id: cred.user.uid,
           Height: formValues.Height,
@@ -68,7 +69,7 @@ const Sign = ({ navigation }) => {
           Position: formValues.Position,
           Team: '',
           Description: '',
-          ImageUrl: ''
+          ImageUrl: "https://pbs.twimg.com/media/FZukxoeUsAABmXt.jpg"
         })
       });
       setLoading(false);
@@ -116,13 +117,13 @@ const Sign = ({ navigation }) => {
                   <Input
                     value={values.Height}
                     onChangeText={handleChange('Height')}
-                    placeholder="Ağırlığınızı Giriniz"
+                    placeholder="Boyunuzu Giriniz"
                     iconName="height"
                   />
                   <Input
                     value={values.Weight}
                     onChangeText={handleChange('Weight')}
-                    placeholder="Boyunuzu Giriniz"
+                    placeholder="Kilonuzu Giriniz"
                     iconName="weight"
                   />
                   <Input

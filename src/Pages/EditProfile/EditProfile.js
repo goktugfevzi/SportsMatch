@@ -7,6 +7,9 @@ import {
   ImageBackground,
   KeyboardAvoidingView,
   ScrollView,
+  Image,
+  StyleSheet,
+  Dimensions,
 } from "react-native";
 import Button from "../../Components/Button";
 import styles from './EditProfile.style';
@@ -45,14 +48,14 @@ const EditProfile = ({ navigation }) => {
       });
   }, []);
 
-  useEffect(()=>{
+  useEffect(() => {
     storage().ref('userImage/' + auth().currentUser.uid)
-    .getDownloadURL()
-    .then((url) => {
-      setImage( url );
-    })
-    .catch((e) => console.log('getting downloadURL of image error => ', e));
-  },[setImage])
+      .getDownloadURL()
+      .then((url) => {
+        setImage(url);
+      })
+      .catch((e) => console.log('getting downloadURL of image error => ', e));
+  }, [setImage])
 
   const handleFormSubmit = async formValues => {
     let Name = user.Name
@@ -136,10 +139,17 @@ const EditProfile = ({ navigation }) => {
           console.log('Image uploaded to the bucket!');
         });
       } catch (error) {
+        if (error.code === 'E_PICKER_CANCELLED') {
+          return false;
+        }
         console.log(error);
       }
+    }).catch(e => {
+      console.log(e)
     });
   }
+
+
 
   const choosePhotos = () => {
     ImagePicker.openPicker({
@@ -161,14 +171,22 @@ const EditProfile = ({ navigation }) => {
           console.log('Image uploaded to the bucket!');
         });
       } catch (error) {
+        if (error.code === 'E_PICKER_CANCELLED') {
+          return false;
+        }
         console.log(error);
       }
+    }).catch(e => {
+      console.log(e)
     });
   }
-  
+
   return (
     <Provider>
       <ScrollView>
+        <View style={{height:Dimensions.get('window').height}}>
+        <Image source={require("../../assets/deneme3.jpg")} style={StyleSheet.absoluteFillObject}  blurRadius={7} />
+
         <View style={styles.container}>
           <KeyboardAvoidingView behavior='position'>
 
@@ -259,11 +277,8 @@ const EditProfile = ({ navigation }) => {
             </Formik>
           </KeyboardAvoidingView>
         </View>
+        </View>
       </ScrollView>
-
-
-
-
     </Provider>
   )
 }

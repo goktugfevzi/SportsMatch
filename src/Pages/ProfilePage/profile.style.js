@@ -67,7 +67,12 @@ const styles = StyleSheet.create({
         color:"black",
         height:50
     },
-    text_style:{
+    text_style_false:{
+        color:'gray',
+        fontSize:15,
+        padding:8,
+    },
+    text_style_true:{
         color:'black',
         fontSize:15,
         padding:8,
