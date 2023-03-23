@@ -34,11 +34,15 @@ npm install
 
 
 3-Firebase işlemlerini tamamlayın
-
+<br/>
 Firebase hesabı oluşturun ve projenizi Firebase Console'da oluşturun.
-Firebase projesi için web uygulaması oluşturun ve Firebase yapılandırma ayarlarını projenize ekleyin.
+<br/>
+Firebase projesi için mobil uygulaması oluşturun ve Firebase yapılandırma ayarlarını projenize ekleyin.
+<br/>
 Firebase Authentication, Storage ve Firestore hizmetlerini etkinleştirin.
+<br/>
 Firebase Authentication için e-posta ve şifre kimlik doğrulama yöntemini etkinleştirin.
+<br/>
 Firestore'da gerekli koleksiyonlar ve alanları oluşturun.
 
 <br/>
@@ -55,12 +59,17 @@ npm start
 <br/>
 
 ## Kullanım
-
+<br/>
 Yeni bir hesap oluşturmak için "Kaydol" düğmesine tıklayın ve gerekli bilgileri girin.
+<br/>
 Giriş yapmak için "Giriş Yap" düğmesine tıklayın ve e-posta ve şifrenizi girin.
+<br/>
 Ana sayfada, spor etkinliklerini ve diğer kullanıcıların profillerini görüntüleyebilirsiniz.
+<br/>
 Profil sayfanızda, profil resminizi, spor ilgi alanlarınızı ve diğer bilgilerinizi güncelleyebilirsiniz.
+<br/>
 Diğer kullanıcıların profillerini görüntülemek ve mesaj göndermek için kullanıcı adına tıklayın.
+<br/>
 Mesajlar sayfasında, diğer kullanıcılarla mesajlaşabilirsiniz.
 
 
